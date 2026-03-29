@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLCGA Conference & Exhibition 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Afacad', 'sans-serif'],
+                        body: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        nlcga: {
+                            dark: '#0B2318',
+                            primary: '#4CAF50',
+                            light: '#2E8C5A',
+                            blue: '#0081C6',
+                            gold: '#C5A866',
+                            surface: '#F4F6F5',
+                        }
+                    },
+                    animation: {
+                        'marquee': 'marquee 25s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #07140d;
+            z-index: 100;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+        }
+        .page-loader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .page-loader-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .page-loader-logo {
+            width: 92px;
+            height: 92px;
+            object-fit: contain;
+            animation: loaderPulse 1.4s ease-in-out infinite;
+        }
+        .page-loader-text {
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+        }
+        body.reveal-ready [data-reveal] {
+            opacity: 0;
+            will-change: transform, opacity;
+            transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        body.reveal-ready [data-reveal="up"] {
+            transform: translate3d(0, 48px, 0);
+        }
+        body.reveal-ready [data-reveal="left"] {
+            transform: translate3d(-56px, 0, 0);
+        }
+        body.reveal-ready [data-reveal="right"] {
+            transform: translate3d(56px, 0, 0);
+        }
+        body.reveal-ready [data-reveal].is-visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body.reveal-ready [data-reveal] {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+        .speaker-slider-stage {
+            position: relative;
+            min-height: 620px;
+        }
+        .speaker-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: translateX(24px);
+            pointer-events: none;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .speaker-slide.is-active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        @media (max-width: 1279px) {
+            .speaker-slider-stage {
+                min-height: 1120px;
+            }
+        }
+        @media (max-width: 767px) {
+            .speaker-slider-stage {
+                min-height: 2200px;
+            }
+        }
+        .hero-video-wrap {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 177.78vh;
+            min-width: 100%;
+            height: 56.25vw;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-video-wrap iframe {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="font-body text-gray-800 bg-nlcga-surface antialiased selection:bg-nlcga-blue selection:text-white">
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+        <div class="page-loader-inner">
+            <img src="assets/nlcga-icon.png" alt="NLCGA logo" class="page-loader-logo">
+            <div class="page-loader-text">Loading</div>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 glass-panel border-b-0 bg-nlcga-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            <div class="font-display font-bold text-2xl tracking-wide text-white flex items-center gap-2">
+                <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-9 h-9 object-contain">
+                NLCGA<span class="text-nlcga-blue">2026</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-nlcga-gold transition-colors">About</a>
+                <a href="#why-attend" class="hover:text-nlcga-gold transition-colors">Why Attend</a>
+                <a href="#agenda" class="hover:text-nlcga-gold transition-colors">Agenda</a>
+                <a href="#speakers" class="hover:text-nlcga-gold transition-colors">Speakers</a>
+                <a href="sponsorship.html" class="hover:text-nlcga-gold transition-colors">Sponsorship</a>
+            </div>
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke-width="1.7"></rect><circle cx="12" cy="12" r="3.5" stroke-width="1.7"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+                </a>
+                <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.94 8.5H3.56V20h3.38V8.5zm.24-3.56A1.96 1.96 0 1 0 3.26 4.9a1.96 1.96 0 0 0 3.92.04zM20.44 13c0-3.42-1.83-5-4.27-5a3.7 3.7 0 0 0-3.33 1.83V8.5H9.46c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.91-1.38 1.34 0 1.88 1.03 1.88 2.54V20h3.38V13z"></path></svg>
+                </a>
+                <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.19a2.96 2.96 0 0 0-2.08-2.09C17.67 4.5 12 4.5 12 4.5s-5.67 0-7.5.6A2.96 2.96 0 0 0 2.42 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .42 4.81 2.96 2.96 0 0 0 2.08 2.09c1.83.6 7.5.6 7.5.6s5.67 0 7.5-.6a2.96 2.96 0 0 0 2.08-2.09A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.42-4.81zM10 15.5v-7l6 3.5-6 3.5z"></path></svg>
+                </a>
+                <a href="register.html" class="bg-white text-nlcga-primary font-display font-semibold px-6 py-2 rounded-full hover:bg-nlcga-gold hover:text-white transition-all duration-300">Register Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative min-h-screen flex items-center bg-nlcga-primary overflow-hidden pt-20">
+        <div class="hero-video-wrap">
+            <iframe
+                class="hero-video opacity-55"
+                src="https://www.youtube.com/embed/Yu6HClE_JrY?autoplay=1&mute=1&controls=0&loop=1&playlist=Yu6HClE_JrY&playsinline=1&modestbranding=1&rel=0"
+                title="NLCGA hero background video"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                referrerpolicy="strict-origin-when-cross-origin"
+                tabindex="-1"
+                aria-hidden="true">
+            </iframe>
+        </div>
+        <div class="absolute inset-0 bg-[linear-gradient(115deg,rgba(5,16,10,0.94)_0%,rgba(8,23,14,0.9)_34%,rgba(10,28,17,0.72)_64%,rgba(6,18,12,0.88)_100%)]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(76,175,80,0.14),transparent_28%)]"></div>
+        <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/80 to-transparent"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-12 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 xl:gap-16 items-end">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-3 rounded-full border border-white/20 bg-nlcga-dark/60 px-5 py-2 backdrop-blur-sm shadow-lg shadow-black/20">
+                        <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-5 h-5 object-contain">
+                        <p class="font-body text-xs font-semibold uppercase tracking-[0.28em] text-white">15th Annual Gathering</p>
+                    </div>
+                    
+                    <div class="space-y-5">
+                        <p class="font-display text-lg md:text-xl uppercase tracking-[0.24em] text-white/90">NLCGA Conference &amp; Exhibition</p>
+                        <h1 class="font-display font-bold text-5xl md:text-7xl xl:text-[5.4rem] leading-[0.92] tracking-tight text-white max-w-4xl drop-shadow-[0_6px_24px_rgba(0,0,0,0.4)]">
+                            Gas, Economic Diversification &amp; Private Sector Growth
+                        </h1>
+                        <p class="font-body text-base md:text-xl text-white/95 max-w-2xl leading-relaxed drop-shadow-[0_4px_18px_rgba(0,0,0,0.35)]">
+                            A more refined platform for policymakers, investors, operators, and innovators shaping the future of LPG, CNG, and LNG across Nigeria.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/95">
+                        <span class="rounded-full border border-white/20 bg-nlcga-dark/60 px-4 py-3 backdrop-blur-sm shadow-lg shadow-black/20">15-16 Oct, 2025</span>
+                        <span class="rounded-full border border-white/20 bg-nlcga-dark/60 px-4 py-3 backdrop-blur-sm shadow-lg shadow-black/20">Landmark Centre</span>
+                        <span class="rounded-full border border-white/20 bg-nlcga-dark/60 px-4 py-3 backdrop-blur-sm shadow-lg shadow-black/20">Victoria Island, Lagos</span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                        <a href="register.html" class="bg-nlcga-light text-white font-display font-semibold text-lg px-8 py-4 rounded-full text-center hover:bg-nlcga-primary transition-all duration-300 shadow-lg shadow-nlcga-primary/20">Register Now</a>
+                        <a href="sponsorship.html" class="bg-white/10 text-white font-display font-semibold text-lg px-8 py-4 rounded-full text-center border border-white/20 hover:bg-white/15 transition-all duration-300 backdrop-blur-sm">Partner With Us</a>
+                    </div>
+                </div>
+
+                <div class="lg:justify-self-end w-full max-w-[360px]">
+                    <div class="flex flex-col items-start lg:items-end text-white">
+                        <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-28 md:w-36 h-auto object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)]">
+                        <div class="mt-5 text-left lg:text-right">
+                            <p id="countdown-label" class="text-sm md:text-base text-nlcga-blue tracking-[0.16em] uppercase">Countdown to opening day</p>
+                            <div class="mt-3 flex flex-wrap lg:justify-end items-end gap-x-4 gap-y-3">
+                                <div class="min-w-[60px]">
+                                    <div id="countdown-days" class="font-display text-4xl md:text-5xl font-bold text-white leading-none">00</div>
+                                    <div class="mt-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/65">Days</div>
+                                </div>
+                                <div class="min-w-[60px]">
+                                    <div id="countdown-hours" class="font-display text-4xl md:text-5xl font-bold text-white leading-none">00</div>
+                                    <div class="mt-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/65">Hours</div>
+                                </div>
+                                <div class="min-w-[60px]">
+                                    <div id="countdown-minutes" class="font-display text-4xl md:text-5xl font-bold text-white leading-none">00</div>
+                                    <div class="mt-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/65">Minutes</div>
+                                </div>
+                                <div class="min-w-[60px]">
+                                    <div id="countdown-seconds" class="font-display text-4xl md:text-5xl font-bold text-white leading-none">00</div>
+                                    <div class="mt-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/65">Seconds</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" data-reveal="up" class="py-24 relative bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="relative z-10">
+                <h2 class="font-display font-bold text-5xl md:text-6xl text-black leading-none mb-8">
+                    BEYOND<br>
+                    <span class="text-transparent border-none text-outline !text-gray-300">TRADITIONAL</span><br>
+                    ENERGY.
+                </h2>
+                <div class="border-l-2 border-black pl-6 space-y-6">
+                    <p class="text-2xl font-display font-medium text-gray-800 leading-snug">
+                        Driving the transition toward sustainable gas utilization across the African continent.
+                    </p>
+                    <p class="text-gray-500 font-body leading-relaxed">
+                        The NLCGA 2026 Conference isn't just a meeting point; it's an incubator for policy formulation, technological exchange, and high-level investments shaping the future of LPG, CNG, and LNG markets.
+                    </p>
+                </div>
+            </div>
+
+            <div class="relative h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl">
+                <img src="assets/pollution-industry-exterior-daylight_23-2149057682.jpg" class="w-full h-full object-cover object-center" alt="Industrial gas facility">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+                <div class="absolute top-6 right-6 rounded-2xl border border-white/20 bg-white/85 px-5 py-4 backdrop-blur-md shadow-xl">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-nlcga-blue">Core Focus</p>
+                    <p class="mt-2 font-display text-2xl text-black leading-none">LPG, CNG<br>&amp; LNG</p>
+                </div>
+                <div class="absolute left-6 bottom-6 max-w-[240px] rounded-2xl border border-white/15 bg-nlcga-dark/70 px-5 py-4 text-white backdrop-blur-md shadow-xl">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70">Conference Value</p>
+                    <p class="mt-2 font-display text-2xl leading-none">Policy, investment and industry dialogue.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-attend" data-reveal="left" class="py-24 bg-nlcga-surface">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <span class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Why Attend</span>
+                <h2 class="font-display font-bold text-4xl md:text-5xl text-black mt-2">Discover the Value of Attending</h2>
+            </div>
+            <p class="max-w-md text-gray-500 font-body text-sm md:text-base">The live conference positions attendance around connections, investment access, and practical insight across the gas sector.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 lg:px-12">
+            <div class="bg-white p-8 rounded-3xl border border-gray-100 hover:border-nlcga-light transition-colors duration-300 group">
+                <div class="w-12 h-12 rounded-full bg-nlcga-surface text-nlcga-primary flex items-center justify-center mb-16 group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M7 10h10M7 14h5"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M16.5 5.5a2.5 2.5 0 012.5 2.5v8a2.5 2.5 0 01-2.5 2.5h-9A2.5 2.5 0 015 16V8a2.5 2.5 0 012.5-2.5h9z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M15.5 3v5"></path>
+                    </svg>
+                </div>
+                <h3 class="font-display font-bold text-2xl text-black mb-3">Connect With Industry Leaders</h3>
+                <p class="text-gray-500 font-body text-sm">Engage with government officials, investors, energy executives, and policy experts driving real change in the energy and private sectors.</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl border border-gray-100 hover:border-nlcga-light transition-colors duration-300 group">
+                <div class="w-12 h-12 rounded-full bg-nlcga-surface text-nlcga-primary flex items-center justify-center mb-16 group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M4 16l4.5-4.5 3 3L20 6"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M15 6h5v5"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M4 20h16"></path>
+                    </svg>
+                </div>
+                <h3 class="font-display font-bold text-2xl text-black mb-3">Unlock Investment Opportunities</h3>
+                <p class="text-gray-500 font-body text-sm">Learn about emerging trends in gas infrastructure, modular refineries, and power generation, with insight into incentives and funding shifts.</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl border border-gray-100 hover:border-nlcga-light transition-colors duration-300 group">
+                <div class="w-12 h-12 rounded-full bg-nlcga-surface text-nlcga-primary flex items-center justify-center mb-16 group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M6.5 18.5h11"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M8 18.5V7.5a1.5 1.5 0 011.5-1.5h7A1.5 1.5 0 0118 7.5v11"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M10 9.5h6M10 12.5h6M10 15.5h4"></path>
+                    </svg>
+                </div>
+                <h3 class="font-display font-bold text-2xl text-black mb-3">Expand Your Knowledge Base</h3>
+                <p class="text-gray-500 font-body text-sm">Gain access to data-driven presentations, case studies, expert panels, and practical insight on gas monetization, reform, innovation, and sustainability.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="agenda" data-reveal="right" class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-6 lg:px-12">
+            <h2 class="font-display font-bold text-4xl text-black mb-16 text-center">Conference Agenda</h2>
+            
+            <div class="relative border-l border-gray-200 ml-3 md:ml-0 md:border-none">
+                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2"></div>
+                
+                <div class="relative pl-8 md:pl-0 mb-12 md:flex md:justify-between items-center w-full group">
+                    <div class="absolute w-4 h-4 rounded-full bg-nlcga-blue border-4 border-white left-[-8px] md:left-1/2 md:transform md:-translate-x-1/2 top-1 md:top-auto z-10"></div>
+                    <div class="md:w-[45%] md:text-right pr-8">
+                        <span class="text-nlcga-gold font-display font-bold text-xl">09:00 AM</span>
+                        <span class="block text-sm text-gray-400 font-body uppercase tracking-wide">Day 1</span>
+                    </div>
+                    <div class="md:w-[45%] bg-nlcga-surface p-6 rounded-2xl group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300 mt-2 md:mt-0">
+                        <h4 class="font-display font-bold text-lg mb-1">Ministerial Keynote Address</h4>
+                        <p class="text-sm text-gray-500 group-hover:text-gray-300">Hon. Minister of State for Petroleum Resources</p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-0 mb-12 md:flex md:justify-between md:flex-row-reverse items-center w-full group">
+                    <div class="absolute w-4 h-4 rounded-full bg-gray-300 border-4 border-white left-[-8px] md:left-1/2 md:transform md:-translate-x-1/2 top-1 md:top-auto z-10 group-hover:bg-nlcga-blue transition-colors"></div>
+                    <div class="md:w-[45%] pl-8">
+                        <span class="text-nlcga-gold font-display font-bold text-xl">11:30 AM</span>
+                        <span class="block text-sm text-gray-400 font-body uppercase tracking-wide">Day 1</span>
+                    </div>
+                    <div class="md:w-[45%] bg-nlcga-surface p-6 rounded-2xl md:text-right group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300 mt-2 md:mt-0">
+                        <h4 class="font-display font-bold text-lg mb-1">Panel: Scaling CNG Infrastructure</h4>
+                        <p class="text-sm text-gray-500 group-hover:text-gray-300">Moderated by NLCGA President</p>
+                    </div>
+                </div>
+
+                <div id="agenda-more" class="space-y-0" hidden>
+                    <div class="relative pl-8 md:pl-0 mb-12 md:flex md:justify-between items-center w-full group">
+                        <div class="absolute w-4 h-4 rounded-full bg-gray-300 border-4 border-white left-[-8px] md:left-1/2 md:transform md:-translate-x-1/2 top-1 md:top-auto z-10 group-hover:bg-nlcga-blue transition-colors"></div>
+                        <div class="md:w-[45%] md:text-right pr-8">
+                            <span class="text-nlcga-gold font-display font-bold text-xl">02:00 PM</span>
+                            <span class="block text-sm text-gray-400 font-body uppercase tracking-wide">Day 1</span>
+                        </div>
+                        <div class="md:w-[45%] bg-nlcga-surface p-6 rounded-2xl group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300 mt-2 md:mt-0">
+                            <h4 class="font-display font-bold text-lg mb-1">Investment Roundtable</h4>
+                            <p class="text-sm text-gray-500 group-hover:text-gray-300">Private sector opportunities in gas distribution, storage, and processing.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative pl-8 md:pl-0 mb-12 md:flex md:justify-between md:flex-row-reverse items-center w-full group">
+                        <div class="absolute w-4 h-4 rounded-full bg-gray-300 border-4 border-white left-[-8px] md:left-1/2 md:transform md:-translate-x-1/2 top-1 md:top-auto z-10 group-hover:bg-nlcga-blue transition-colors"></div>
+                        <div class="md:w-[45%] pl-8">
+                            <span class="text-nlcga-gold font-display font-bold text-xl">09:30 AM</span>
+                            <span class="block text-sm text-gray-400 font-body uppercase tracking-wide">Day 2</span>
+                        </div>
+                        <div class="md:w-[45%] bg-nlcga-surface p-6 rounded-2xl md:text-right group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300 mt-2 md:mt-0">
+                            <h4 class="font-display font-bold text-lg mb-1">Technical Session: LPG Growth Pathways</h4>
+                            <p class="text-sm text-gray-500 group-hover:text-gray-300">Practical sessions on adoption, market development, and safety standards.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative pl-8 md:pl-0 md:flex md:justify-between items-center w-full group">
+                        <div class="absolute w-4 h-4 rounded-full bg-gray-300 border-4 border-white left-[-8px] md:left-1/2 md:transform md:-translate-x-1/2 top-1 md:top-auto z-10 group-hover:bg-nlcga-blue transition-colors"></div>
+                        <div class="md:w-[45%] md:text-right pr-8">
+                            <span class="text-nlcga-gold font-display font-bold text-xl">01:00 PM</span>
+                            <span class="block text-sm text-gray-400 font-body uppercase tracking-wide">Day 2</span>
+                        </div>
+                        <div class="md:w-[45%] bg-nlcga-surface p-6 rounded-2xl group-hover:bg-nlcga-primary group-hover:text-white transition-colors duration-300 mt-2 md:mt-0">
+                            <h4 class="font-display font-bold text-lg mb-1">Closing Dialogue and Networking Lunch</h4>
+                            <p class="text-sm text-gray-500 group-hover:text-gray-300">Final reflections, sponsor acknowledgements, and high-level networking.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <button
+                    id="agenda-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="agenda-more"
+                    class="inline-flex items-center justify-center rounded-full border border-gray-200 px-8 py-3 text-sm font-display font-semibold uppercase tracking-[0.18em] text-black transition-colors duration-300 hover:border-nlcga-primary hover:bg-nlcga-primary hover:text-white"
+                >
+                    See More
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="speakers" data-reveal="up" class="py-24 bg-nlcga-surface">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <span class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Speakers</span>
+                    <h2 class="font-display font-bold text-4xl md:text-5xl text-black mt-2">NLCGA 2025 Conference Speakers</h2>
+                </div>
+                <div class="flex items-end gap-4">
+                    <p class="max-w-md text-gray-500 font-body text-sm md:text-base">This lineup mirrors the live site’s focus on ministers, NLCGA leadership, and operators from across the gas ecosystem.</p>
+                    <div class="hidden md:flex items-center gap-3">
+                        <button type="button" id="speakers-home-prev" class="w-12 h-12 rounded-full border border-gray-200 text-black hover:bg-white transition-colors">←</button>
+                        <button type="button" id="speakers-home-next" class="w-12 h-12 rounded-full border border-gray-200 text-black hover:bg-white transition-colors">→</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="speaker-slider-stage">
+                <div class="speaker-slide is-active" data-speaker-slide>
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=900&auto=format&fit=crop" alt="Senator Heineken Lokpobiri portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Federal Ministry</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Senator Heineken Lokpobiri, Ph.D</h3>
+                                <p class="mt-3 text-sm text-gray-500">Minister of State for Petroleum Resources (Oil)</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=900&auto=format&fit=crop" alt="Minister speaker portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Federal Ministry</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Rt. Hon. Obongemem Ekperikpe Ekpo</h3>
+                                <p class="mt-3 text-sm text-gray-500">Minister of State, Petroleum Resources (Gas)</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop" alt="Association leader portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Association Leadership</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Mr. Felix Ekundayo</h3>
+                                <p class="mt-3 text-sm text-gray-500">President, Nigeria Liquefied and Compressed Gases Association</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=900&auto=format&fit=crop" alt="Industry executive portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Industry Executive</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Effiong Udofia Okon</h3>
+                                <p class="mt-3 text-sm text-gray-500">Managing Director, ANOH Gas Processing Company Limited</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="speaker-slide" data-speaker-slide>
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=900&auto=format&fit=crop" alt="Ladi Falola portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Association Leadership</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Ladi Falola</h3>
+                                <p class="mt-3 text-sm text-gray-500">Deputy President, Nigeria Liquefied And Compressed Gases Association</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?q=80&w=900&auto=format&fit=crop" alt="Femi Fanoiki portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Association Leadership</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Femi Fanoiki</h3>
+                                <p class="mt-3 text-sm text-gray-500">First Vice President, Nigeria Liquefied And Compressed Gases Association</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=900&auto=format&fit=crop" alt="Iroghama Ogbeifun portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Industry Executive</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Iroghama Ogbeifun</h3>
+                                <p class="mt-3 text-sm text-gray-500">M.D/Chief Executive Officer, Starzs Investments Company Limited</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="bg-white rounded-3xl border border-gray-100 overflow-hidden">
+                            <div class="grid grid-cols-[210px_minmax(0,1fr)] items-stretch min-h-[280px]">
+                                <div class="overflow-hidden bg-nlcga-surface">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop" alt="Sumeet Singh portrait" class="w-full h-full object-cover">
+                                </div>
+                                <div class="p-7">
+                                <p class="text-xs uppercase tracking-[0.22em] text-nlcga-blue font-semibold">Industry Executive</p>
+                                <h3 class="mt-4 font-display text-2xl text-black">Sumeet Singh</h3>
+                                <p class="mt-3 text-sm text-gray-500">Chief Executive Officer, Powergas Nigeria</p>
+                                <a href="speaker-biography.html" class="inline-block mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors">View Biography</a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sponsors" data-reveal="left" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <span class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Sponsors</span>
+                    <h2 class="font-display font-bold text-4xl md:text-5xl text-black mt-2">Our Sponsors & Exhibition Partners</h2>
+                </div>
+                <p class="max-w-md text-gray-500 font-body text-sm md:text-base">The conference site gives sponsors strong visibility, so this redesign now does the same with a dedicated partner section.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">Nigeria LNG Limited</div>
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">Biswal</div>
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">Banner Energy</div>
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">Asiko</div>
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">Cecom Technologies</div>
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">MannTek</div>
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">Shafa Holdings</div>
+                <div class="rounded-3xl border border-gray-100 bg-nlcga-surface p-6 text-center font-display text-xl text-black">Gas Terminalling</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="venue" data-reveal="right" class="py-24 bg-nlcga-dark relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvc3ZnPg==')]"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div>
+                <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Venue</p>
+                <h2 class="font-display font-bold text-4xl md:text-6xl text-white mt-4 leading-none">Landmark Centre, Victoria Island, Lagos.</h2>
+                <p class="mt-6 text-gray-300 font-body max-w-3xl leading-8">
+                    The NLCGA Conference &amp; Exhibition returns to one of Lagos' best-known event destinations, offering a premium setting for networking, exhibition, high-level panels, and industry meetings.
+                </p>
+            </div>
+
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+                    <img src="assets/environmental-pollution-industry-exterior-daylight_23-2149057687.jpg" alt="Venue visual" class="w-full h-[340px] md:h-[420px] object-cover">
+                </div>
+                <div class="rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl bg-white">
+                    <iframe
+                        title="Map showing Landmark Centre, Victoria Island, Lagos"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=3.4320%2C6.4248%2C3.4586%2C6.4378&layer=mapnik&marker=6.4301%2C3.4453"
+                        class="w-full h-[340px] md:h-[420px] border-0"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5 text-white">
+                <div class="rounded-3xl border border-white/10 bg-white/5 px-6 py-5 backdrop-blur-sm">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-nlcga-blue">Venue Name</p>
+                    <p class="mt-3 font-display text-2xl">Landmark Centre</p>
+                    <p class="mt-2 text-sm text-white/70">Water Corporation Drive, Oniru, Victoria Island, Lagos</p>
+                </div>
+                <div class="rounded-3xl border border-white/10 bg-white/5 px-6 py-5 backdrop-blur-sm">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-nlcga-blue">Event Dates</p>
+                    <p class="mt-3 font-display text-2xl">15-16 October 2025</p>
+                    <p class="mt-2 text-sm text-white/70">Conference sessions, exhibition, networking and partner meetings</p>
+                </div>
+                <div class="rounded-3xl border border-white/10 bg-white/5 px-6 py-5 backdrop-blur-sm">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-nlcga-blue">Contact</p>
+                    <p class="mt-3 font-display text-2xl">events@nlcga.org.ng</p>
+                    <p class="mt-2 text-sm text-white/70">+234 (0) 800 NLCGA 26</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" data-reveal="up" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="rounded-[2.25rem] overflow-hidden bg-nlcga-dark shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr]">
+                    <div class="px-8 py-10 md:px-12 md:py-14 text-white">
+                        <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Registration</p>
+                        <h2 class="font-display font-bold text-4xl md:text-6xl mt-4 leading-[0.95]">Step into the room where Nigeria's gas future is being shaped.</h2>
+                        <p class="mt-6 text-white/74 leading-8 max-w-2xl">
+                            Register as a delegate, secure VIP access, or explore sponsor participation through the dedicated registration page.
+                        </p>
+                        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                            <a href="register.html" class="bg-nlcga-primary text-white font-display font-semibold text-lg px-8 py-4 rounded-full text-center hover:bg-nlcga-light transition-all duration-300">Go To Registration</a>
+                            <a href="sponsorship.html" class="border border-white/20 text-white font-display font-semibold text-lg px-8 py-4 rounded-full text-center hover:bg-white/10 transition-all duration-300">View Sponsors</a>
+                        </div>
+                    </div>
+
+                    <div class="bg-[linear-gradient(160deg,#0f2717_0%,#143620_45%,#1f4f31_100%)] px-8 py-10 md:px-10 md:py-14 text-white">
+                        <div class="grid grid-cols-2 gap-5">
+                            <div class="rounded-3xl border border-white/10 bg-white/5 p-5">
+                                <p class="text-xs uppercase tracking-[0.2em] text-white/60">Format</p>
+                                <p class="mt-3 font-display text-3xl">2 Days</p>
+                            </div>
+                            <div class="rounded-3xl border border-white/10 bg-white/5 p-5">
+                                <p class="text-xs uppercase tracking-[0.2em] text-white/60">Audience</p>
+                                <p class="mt-3 font-display text-3xl">Delegates</p>
+                            </div>
+                            <div class="rounded-3xl border border-white/10 bg-white/5 p-5">
+                                <p class="text-xs uppercase tracking-[0.2em] text-white/60">Access</p>
+                                <p class="mt-3 font-display text-3xl">VIP + Digital</p>
+                            </div>
+                            <div class="rounded-3xl border border-white/10 bg-white/5 p-5">
+                                <p class="text-xs uppercase tracking-[0.2em] text-white/60">Venue</p>
+                                <p class="mt-3 font-display text-3xl">Landmark</p>
+                            </div>
+                        </div>
+                        <p class="mt-6 text-sm leading-7 text-white/70">
+                            Choose the level of participation that matches your goals, from full in-room engagement to digital access and sponsor visibility.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer data-reveal="up" class="bg-[#061710] py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-2">
+                <div class="font-display font-bold text-2xl tracking-wide text-white flex items-center gap-2 mb-6">
+                    <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-9 h-9 object-contain">
+                    NLCGA<span class="text-nlcga-blue">2026</span>
+                </div>
+                <p class="text-gray-500 font-body text-sm max-w-sm">Driving growth, safety, and innovation in Nigeria's liquefied and compressed gas sectors.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-gray-500 text-sm font-body">
+                    <li><a href="#about" class="hover:text-nlcga-gold transition-colors">About</a></li>
+                    <li><a href="#speakers" class="hover:text-nlcga-gold transition-colors">Speakers</a></li>
+                    <li><a href="sponsorship.html" class="hover:text-nlcga-gold transition-colors">Sponsors</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-4">Contact</h4>
+                <ul class="space-y-2 text-gray-500 text-sm font-body">
+                    <li>events@nlcga.org.ng</li>
+                    <li>+234 (0) 800 NLCGA 26</li>
+                    <li>FCT Abuja, Nigeria</li>
+                </ul>
+                <div class="mt-5 flex items-center gap-3">
+                    <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke-width="1.7"></rect><circle cx="12" cy="12" r="3.5" stroke-width="1.7"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.94 8.5H3.56V20h3.38V8.5zm.24-3.56A1.96 1.96 0 1 0 3.26 4.9a1.96 1.96 0 0 0 3.92.04zM20.44 13c0-3.42-1.83-5-4.27-5a3.7 3.7 0 0 0-3.33 1.83V8.5H9.46c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.91-1.38 1.34 0 1.88 1.03 1.88 2.54V20h3.38V13z"></path></svg>
+                    </a>
+                    <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.19a2.96 2.96 0 0 0-2.08-2.09C17.67 4.5 12 4.5 12 4.5s-5.67 0-7.5.6A2.96 2.96 0 0 0 2.42 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .42 4.81 2.96 2.96 0 0 0 2.08 2.09c1.83.6 7.5.6 7.5.6s5.67 0 7.5-.6a2.96 2.96 0 0 0 2.08-2.09A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.42-4.81zM10 15.5v-7l6 3.5-6 3.5z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const eventDate = new Date('2025-10-15T09:00:00+01:00');
+        const countdownNodes = {
+            days: document.getElementById('countdown-days'),
+            hours: document.getElementById('countdown-hours'),
+            minutes: document.getElementById('countdown-minutes'),
+            seconds: document.getElementById('countdown-seconds'),
+            label: document.getElementById('countdown-label'),
+        };
+
+        function padNumber(value) {
+            return String(value).padStart(2, '0');
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = eventDate.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                countdownNodes.days.textContent = '00';
+                countdownNodes.hours.textContent = '00';
+                countdownNodes.minutes.textContent = '00';
+                countdownNodes.seconds.textContent = '00';
+                countdownNodes.label.textContent = 'The event is now live';
+                return;
+            }
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            countdownNodes.days.textContent = padNumber(days);
+            countdownNodes.hours.textContent = padNumber(hours);
+            countdownNodes.minutes.textContent = padNumber(minutes);
+            countdownNodes.seconds.textContent = padNumber(seconds);
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        const speakerSlides = Array.from(document.querySelectorAll('[data-speaker-slide]'));
+        const speakerPrev = document.getElementById('speakers-home-prev');
+        const speakerNext = document.getElementById('speakers-home-next');
+        let speakerIndex = 0;
+        let speakerAutoAdvance;
+
+        function renderSpeakerSlide() {
+            speakerSlides.forEach((slide, index) => {
+                slide.classList.toggle('is-active', index === speakerIndex);
+            });
+        }
+
+        function restartSpeakerAutoAdvance() {
+            if (speakerAutoAdvance) {
+                clearInterval(speakerAutoAdvance);
+            }
+            speakerAutoAdvance = setInterval(() => {
+                speakerIndex = (speakerIndex + 1) % speakerSlides.length;
+                renderSpeakerSlide();
+            }, 5000);
+        }
+
+        if (speakerSlides.length && speakerPrev && speakerNext) {
+            renderSpeakerSlide();
+            restartSpeakerAutoAdvance();
+
+            speakerPrev.addEventListener('click', () => {
+                speakerIndex = (speakerIndex - 1 + speakerSlides.length) % speakerSlides.length;
+                renderSpeakerSlide();
+                restartSpeakerAutoAdvance();
+            });
+
+            speakerNext.addEventListener('click', () => {
+                speakerIndex = (speakerIndex + 1) % speakerSlides.length;
+                renderSpeakerSlide();
+                restartSpeakerAutoAdvance();
+            });
+        }
+
+        const agendaToggle = document.getElementById('agenda-toggle');
+        const agendaMore = document.getElementById('agenda-more');
+
+        if (agendaToggle && agendaMore) {
+            agendaToggle.addEventListener('click', () => {
+                const isExpanded = agendaToggle.getAttribute('aria-expanded') === 'true';
+                agendaToggle.setAttribute('aria-expanded', String(!isExpanded));
+                agendaMore.hidden = isExpanded;
+                agendaToggle.textContent = isExpanded ? 'See More' : 'Show Less';
+            });
+        }
+
+        const revealElements = document.querySelectorAll('[data-reveal]');
+
+        if (revealElements.length) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+                revealElements.forEach((element) => element.classList.add('is-visible'));
+            } else {
+                document.body.classList.add('reveal-ready');
+
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.18,
+                    rootMargin: '0px 0px -10% 0px',
+                });
+
+                revealElements.forEach((element) => revealObserver.observe(element));
+            }
+        }
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('page-loader');
+            if (loader) {
+                loader.classList.add('is-hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

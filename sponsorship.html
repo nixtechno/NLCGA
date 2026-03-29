@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsorship | NLCGA Conference & Exhibition</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Afacad', 'sans-serif'],
+                        body: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        nlcga: {
+                            dark: '#0B2318',
+                            primary: '#4CAF50',
+                            light: '#2E8C5A',
+                            blue: '#0081C6',
+                            gold: '#C5A866',
+                            surface: '#F4F6F5',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .benefits-panel[hidden] {
+            display: none;
+        }
+        .sponsor-tab-panel[hidden] {
+            display: none;
+        }
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #07140d;
+            z-index: 100;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+        }
+        .page-loader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .page-loader-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .page-loader-logo {
+            width: 92px;
+            height: 92px;
+            object-fit: contain;
+            animation: loaderPulse 1.4s ease-in-out infinite;
+        }
+        .page-loader-text {
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+        }
+        body.reveal-ready [data-reveal] {
+            opacity: 0;
+            will-change: transform, opacity;
+            transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        body.reveal-ready [data-reveal="up"] {
+            transform: translate3d(0, 48px, 0);
+        }
+        body.reveal-ready [data-reveal="left"] {
+            transform: translate3d(-56px, 0, 0);
+        }
+        body.reveal-ready [data-reveal="right"] {
+            transform: translate3d(56px, 0, 0);
+        }
+        body.reveal-ready [data-reveal].is-visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body.reveal-ready [data-reveal] {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="font-body text-gray-800 bg-nlcga-surface antialiased selection:bg-nlcga-blue selection:text-white">
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+        <div class="page-loader-inner">
+            <img src="assets/nlcga-icon.png" alt="NLCGA logo" class="page-loader-logo">
+            <div class="page-loader-text">Loading</div>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 glass-panel border-b-0 bg-nlcga-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            <a href="nlcga.html" class="font-display font-bold text-2xl tracking-wide text-white flex items-center gap-2">
+                <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-9 h-9 object-contain">
+                NLCGA<span class="text-nlcga-blue">2025</span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                <a href="nlcga.html#about" class="hover:text-nlcga-gold transition-colors">About</a>
+                <a href="nlcga.html#agenda" class="hover:text-nlcga-gold transition-colors">Agenda</a>
+                <a href="nlcga.html#speakers" class="hover:text-nlcga-gold transition-colors">Speakers</a>
+                <a href="register.html" class="hover:text-nlcga-gold transition-colors">Register</a>
+            </div>
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke-width="1.7"></rect><circle cx="12" cy="12" r="3.5" stroke-width="1.7"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+                </a>
+                <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.94 8.5H3.56V20h3.38V8.5zm.24-3.56A1.96 1.96 0 1 0 3.26 4.9a1.96 1.96 0 0 0 3.92.04zM20.44 13c0-3.42-1.83-5-4.27-5a3.7 3.7 0 0 0-3.33 1.83V8.5H9.46c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.91-1.38 1.34 0 1.88 1.03 1.88 2.54V20h3.38V13z"></path></svg>
+                </a>
+                <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.19a2.96 2.96 0 0 0-2.08-2.09C17.67 4.5 12 4.5 12 4.5s-5.67 0-7.5.6A2.96 2.96 0 0 0 2.42 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .42 4.81 2.96 2.96 0 0 0 2.08 2.09c1.83.6 7.5.6 7.5.6s5.67 0 7.5-.6a2.96 2.96 0 0 0 2.08-2.09A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.42-4.81zM10 15.5v-7l6 3.5-6 3.5z"></path></svg>
+                </a>
+                <a href="register.html" class="bg-white text-nlcga-primary font-display font-semibold px-6 py-2 rounded-full hover:bg-nlcga-gold hover:text-white transition-all duration-300">Register Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 bg-nlcga-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(76,175,80,0.14),transparent_30%)]"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Sponsorship</p>
+            <h1 class="font-display font-bold text-5xl md:text-7xl leading-[0.95] mt-4 max-w-5xl">Sponsorship Packages</h1>
+            <p class="mt-6 max-w-3xl text-white/78 text-lg leading-8">
+                Maximize your brand exposure at our premier conference with sponsorship options designed for visibility, thought leadership, and direct access to decision-makers.
+            </p>
+        </div>
+    </header>
+
+    <main>
+        <section data-reveal="up" class="py-20 bg-white">
+            <div class="max-w-[1500px] mx-auto px-6 lg:px-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 items-stretch">
+                    <article class="rounded-3xl border border-gray-200 bg-nlcga-surface p-8">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">Platinum</p>
+                        <div class="flex items-center gap-3">
+                            <h2 class="font-display text-3xl text-black">Platinum</h2>
+                            <div class="w-10 h-10 rounded-full bg-white border border-gray-200 text-nlcga-primary flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4l2.3 4.66L19.5 9.4l-3.75 3.65.88 5.15L12 15.9l-4.63 2.3.88-5.15L4.5 9.4l5.2-.74L12 4z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-4 font-display text-5xl text-black">N25,000,000</p>
+                        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                            <li>Event Co-ownership</li>
+                            <li>Breakout Session</li>
+                            <li>Exhibition Booth</li>
+                            <li>Address Participants</li>
+                        </ul>
+                        <button type="button" class="benefits-toggle mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors" aria-expanded="false" aria-controls="benefits-platinum">
+                            View All Benefits
+                        </button>
+                        <div id="benefits-platinum" class="benefits-panel mt-6 border-t border-gray-200 pt-6" hidden>
+                            <h3 class="font-display text-2xl text-black">Platinum Benefits</h3>
+                            <ul class="mt-4 space-y-3 text-sm text-gray-600">
+                                <li>Event Co-ownership</li>
+                                <li>Breakout Session</li>
+                                <li>Exhibition Booth</li>
+                                <li>Address Participants (Keynote Address)</li>
+                                <li>Event Brochure Advert</li>
+                                <li>Branded Signage (Mainstage/All areas)</li>
+                                <li>Logo on Communications</li>
+                                <li>Newsletter Feature</li>
+                                <li>Website Advert</li>
+                                <li>15 Delegate Passes</li>
+                                <li>Social Media Recognition</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="rounded-3xl border border-gray-200 bg-nlcga-surface p-8">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">Gold</p>
+                        <div class="flex items-center gap-3">
+                            <h2 class="font-display text-3xl text-black">Gold</h2>
+                            <div class="w-10 h-10 rounded-full bg-white border border-gray-200 text-nlcga-primary flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3l6 3v5c0 4.2-2.56 7.72-6 9-3.44-1.28-6-4.8-6-9V6l6-3z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.5 11.5l1.7 1.7 3.3-3.7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-4 font-display text-5xl text-black">N15,000,000</p>
+                        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                            <li>Breakout Session</li>
+                            <li>Exhibition Booth</li>
+                            <li>Address Participants (Paper Presentation)</li>
+                            <li>Event Brochure Advert</li>
+                        </ul>
+                        <button type="button" class="benefits-toggle mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors" aria-expanded="false" aria-controls="benefits-gold">
+                            View All Benefits
+                        </button>
+                        <div id="benefits-gold" class="benefits-panel mt-6 border-t border-gray-200 pt-6" hidden>
+                            <h3 class="font-display text-2xl text-black">Gold Benefits</h3>
+                            <ul class="mt-4 space-y-3 text-sm text-gray-600">
+                                <li>Breakout Session</li>
+                                <li>Exhibition Booth</li>
+                                <li>Address Participants (Paper Presentation)</li>
+                                <li>Event Brochure Advert</li>
+                                <li>Branded Signage (Registration or Lunch Area)</li>
+                                <li>Logo on Communications</li>
+                                <li>Feature on NLPGA Newsletter</li>
+                                <li>Website Advert</li>
+                                <li>10 Delegate Passes</li>
+                                <li>Social Media Recognition</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="rounded-3xl border border-gray-200 bg-nlcga-surface p-8">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">Silver</p>
+                        <div class="flex items-center gap-3">
+                            <h2 class="font-display text-3xl text-black">Silver</h2>
+                            <div class="w-10 h-10 rounded-full bg-white border border-gray-200 text-nlcga-primary flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18h12"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 18V8l4-3 4 3v10"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 11h4"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-4 font-display text-5xl text-black">N8,000,000</p>
+                        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                            <li>Exhibition Booth</li>
+                            <li>Address Participants (Anchor a Panel Session)</li>
+                            <li>Event Brochure Advert</li>
+                            <li>Branded Signage (Coffee Area)</li>
+                        </ul>
+                        <button type="button" class="benefits-toggle mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors" aria-expanded="false" aria-controls="benefits-silver">
+                            View All Benefits
+                        </button>
+                        <div id="benefits-silver" class="benefits-panel mt-6 border-t border-gray-200 pt-6" hidden>
+                            <h3 class="font-display text-2xl text-black">Silver Benefits</h3>
+                            <ul class="mt-4 space-y-3 text-sm text-gray-600">
+                                <li>Exhibition Booth</li>
+                                <li>Address Participants (Anchor a Panel Session)</li>
+                                <li>Event Brochure Advert</li>
+                                <li>Branded Signage (Coffee Area)</li>
+                                <li>Logo on Communications</li>
+                                <li>Feature on NLPGA Newsletter</li>
+                                <li>Website Advert</li>
+                                <li>7 Delegate Passes</li>
+                                <li>Social Media Recognition</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="rounded-3xl border border-gray-200 bg-nlcga-surface p-8">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">Partner</p>
+                        <div class="flex items-center gap-3">
+                            <h2 class="font-display text-3xl text-black">Partner</h2>
+                            <div class="w-10 h-10 rounded-full bg-white border border-gray-200 text-nlcga-primary flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 8h10"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 12h7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 16h5"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.5 4.5h11A2.5 2.5 0 0120 7v10a2.5 2.5 0 01-2.5 2.5h-11A2.5 2.5 0 014 17V7a2.5 2.5 0 012.5-2.5z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-4 font-display text-5xl text-black">N5,000,000</p>
+                        <ul class="mt-6 space-y-3 text-sm text-gray-600">
+                            <li>Exhibition Booth</li>
+                            <li>Address Participants (Participate in a Panel Session)</li>
+                            <li>Event Brochure Advert</li>
+                            <li>Branded Signage (Break out Session Area)</li>
+                        </ul>
+                        <button type="button" class="benefits-toggle mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-nlcga-primary hover:text-nlcga-blue transition-colors" aria-expanded="false" aria-controls="benefits-partner">
+                            View All Benefits
+                        </button>
+                        <div id="benefits-partner" class="benefits-panel mt-6 border-t border-gray-200 pt-6" hidden>
+                            <h3 class="font-display text-2xl text-black">Partner Benefits</h3>
+                            <ul class="mt-4 space-y-3 text-sm text-gray-600">
+                                <li>Exhibition Booth</li>
+                                <li>Address Participants (Participate in a Panel Session)</li>
+                                <li>Event Brochure Advert</li>
+                                <li>Branded Signage (Break out Session Area)</li>
+                                <li>Logo on Communications</li>
+                                <li>Feature on NLPGA Newsletter</li>
+                                <li>Website Advert</li>
+                                <li>5 Delegate Passes</li>
+                                <li>Social Media Recognition</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section data-reveal="left" class="py-20 bg-nlcga-dark">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start">
+                    <div>
+                        <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Other Categories</p>
+                        <h2 class="font-display font-bold text-4xl md:text-5xl text-white mt-4">Additional sponsorship and advert opportunities.</h2>
+                    </div>
+
+                    <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6 text-white">
+                        <div class="flex flex-wrap gap-3">
+                            <button type="button" class="sponsor-tab-btn rounded-full bg-white text-black px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em]" data-target="tab-event-support">Event Support</button>
+                            <button type="button" class="sponsor-tab-btn rounded-full border border-white/15 bg-transparent px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/78" data-target="tab-brochure-adverts">Brochure Adverts</button>
+                            <button type="button" class="sponsor-tab-btn rounded-full border border-white/15 bg-transparent px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/78" data-target="tab-advert-boxes">Advert Boxes</button>
+                        </div>
+
+                        <div id="tab-event-support" class="sponsor-tab-panel mt-6">
+                            <p class="text-base uppercase tracking-[0.2em] text-white/60">Event Support</p>
+                            <ul class="mt-4 space-y-4 text-lg md:text-xl text-white/88 leading-8">
+                                <li>Conference Lunch Sponsorship - N3,000,000 per day</li>
+                                <li>Coffee Break Sponsorship - N1,500,000 per day</li>
+                                <li>Souvenir Sponsorship - N5,000,000 per day</li>
+                            </ul>
+                        </div>
+
+                        <div id="tab-brochure-adverts" class="sponsor-tab-panel mt-6" hidden>
+                            <p class="text-base uppercase tracking-[0.2em] text-white/60">Brochure Adverts</p>
+                            <ul class="mt-4 space-y-4 text-lg md:text-xl text-white/88 leading-8">
+                                <li>Back Cover - N2,000,000</li>
+                                <li>Inside Front Cover - N1,750,000</li>
+                                <li>Inside Back Cover - N1,500,000</li>
+                                <li>Full Page - N1,000,000</li>
+                            </ul>
+                        </div>
+
+                        <div id="tab-advert-boxes" class="sponsor-tab-panel mt-6" hidden>
+                            <p class="text-base uppercase tracking-[0.2em] text-white/60">Advert Boxes</p>
+                            <p class="mt-4 text-xl md:text-2xl text-white/92 leading-8">8' x 6' Display Box - N1,000,000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-reveal="right" class="py-20 bg-white">
+            <div class="max-w-5xl mx-auto px-6 lg:px-12">
+                <div class="mb-8 rounded-3xl border border-nlcga-blue/15 bg-nlcga-blue/5 px-6 py-5">
+                    <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Interested in Sponsorship?</p>
+                    <p class="mt-3 text-lg text-gray-700 leading-8">Please contact the NLCGA Secretariat for sponsorship and exhibition payments.</p>
+                </div>
+                <div class="rounded-[2rem] border border-gray-100 bg-nlcga-surface p-8 md:p-10">
+                    <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Interested in Sponsorship?</p>
+                    <h2 class="font-display font-bold text-4xl text-black mt-4">Let’s build the right visibility package for your brand.</h2>
+                    <p class="mt-5 text-gray-600 leading-8">
+                        Contact the organisers for sponsorship enquiries, exhibition opportunities, brochure advert placements, and tailored partnership conversations.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <a href="mailto:info@brevityanderson.com" class="bg-nlcga-primary text-white font-display font-semibold text-lg px-8 py-4 rounded-full text-center hover:bg-nlcga-light transition-colors">Email Sponsorship Team</a>
+                        <a href="register.html" class="border border-gray-200 text-black font-display font-semibold text-lg px-8 py-4 rounded-full text-center hover:bg-white transition-colors">Go To Registration</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer data-reveal="up" class="bg-[#061710] py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-2">
+                <div class="font-display font-bold text-2xl tracking-wide text-white flex items-center gap-2 mb-6">
+                    <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-9 h-9 object-contain">
+                    NLCGA<span class="text-nlcga-blue">2025</span>
+                </div>
+                <p class="text-gray-500 font-body text-sm max-w-sm">Driving growth, safety, and innovation in Nigeria's liquefied and compressed gas sectors.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-gray-500 text-sm font-body">
+                    <li><a href="nlcga.html#about" class="hover:text-nlcga-gold transition-colors">About</a></li>
+                    <li><a href="nlcga.html#speakers" class="hover:text-nlcga-gold transition-colors">Speakers</a></li>
+                    <li><a href="register.html" class="hover:text-nlcga-gold transition-colors">Register</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-4">Contact</h4>
+                <ul class="space-y-2 text-gray-500 text-sm font-body">
+                    <li>info@brevityanderson.com</li>
+                    <li>+44 203 172 0839</li>
+                    <li>15 Stratton Street, W1J 8LQ United Kingdom</li>
+                </ul>
+                <div class="mt-5 flex items-center gap-3">
+                    <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke-width="1.7"></rect><circle cx="12" cy="12" r="3.5" stroke-width="1.7"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.94 8.5H3.56V20h3.38V8.5zm.24-3.56A1.96 1.96 0 1 0 3.26 4.9a1.96 1.96 0 0 0 3.92.04zM20.44 13c0-3.42-1.83-5-4.27-5a3.7 3.7 0 0 0-3.33 1.83V8.5H9.46c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.91-1.38 1.34 0 1.88 1.03 1.88 2.54V20h3.38V13z"></path></svg>
+                    </a>
+                    <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.19a2.96 2.96 0 0 0-2.08-2.09C17.67 4.5 12 4.5 12 4.5s-5.67 0-7.5.6A2.96 2.96 0 0 0 2.42 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .42 4.81 2.96 2.96 0 0 0 2.08 2.09c1.83.6 7.5.6 7.5.6s5.67 0 7.5-.6a2.96 2.96 0 0 0 2.08-2.09A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.42-4.81zM10 15.5v-7l6 3.5-6 3.5z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.benefits-toggle').forEach((button) => {
+            button.addEventListener('click', () => {
+                const panel = document.getElementById(button.getAttribute('aria-controls'));
+                const expanded = button.getAttribute('aria-expanded') === 'true';
+
+                button.setAttribute('aria-expanded', String(!expanded));
+                button.textContent = expanded ? 'View All Benefits' : 'Hide Benefits';
+                panel.hidden = expanded;
+            });
+        });
+
+        const sponsorTabButtons = document.querySelectorAll('.sponsor-tab-btn');
+        const sponsorTabPanels = document.querySelectorAll('.sponsor-tab-panel');
+
+        sponsorTabButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const targetId = button.dataset.target;
+
+                sponsorTabButtons.forEach((btn) => {
+                    const isActive = btn === button;
+                    btn.className = isActive
+                        ? 'sponsor-tab-btn rounded-full bg-white text-black px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em]'
+                        : 'sponsor-tab-btn rounded-full border border-white/15 bg-transparent px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/78';
+                });
+
+                sponsorTabPanels.forEach((panel) => {
+                    panel.hidden = panel.id !== targetId;
+                });
+            });
+        });
+
+        const revealElements = document.querySelectorAll('[data-reveal]');
+
+        if (revealElements.length) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+                revealElements.forEach((element) => element.classList.add('is-visible'));
+            } else {
+                document.body.classList.add('reveal-ready');
+
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.18,
+                    rootMargin: '0px 0px -10% 0px',
+                });
+
+                revealElements.forEach((element) => revealObserver.observe(element));
+            }
+        }
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('page-loader');
+            if (loader) {
+                loader.classList.add('is-hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

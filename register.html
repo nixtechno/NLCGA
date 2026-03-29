@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | NLCGA Conference & Exhibition 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Afacad', 'sans-serif'],
+                        body: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        nlcga: {
+                            dark: '#0B2318',
+                            primary: '#4CAF50',
+                            light: '#2E8C5A',
+                            blue: '#0081C6',
+                            gold: '#C5A866',
+                            surface: '#F4F6F5',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #07140d;
+            z-index: 100;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+        }
+        .page-loader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .page-loader-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .page-loader-logo {
+            width: 92px;
+            height: 92px;
+            object-fit: contain;
+            animation: loaderPulse 1.4s ease-in-out infinite;
+        }
+        .page-loader-text {
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+        }
+        body.reveal-ready [data-reveal] {
+            opacity: 0;
+            will-change: transform, opacity;
+            transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        body.reveal-ready [data-reveal="up"] {
+            transform: translate3d(0, 48px, 0);
+        }
+        body.reveal-ready [data-reveal="left"] {
+            transform: translate3d(-56px, 0, 0);
+        }
+        body.reveal-ready [data-reveal="right"] {
+            transform: translate3d(56px, 0, 0);
+        }
+        body.reveal-ready [data-reveal].is-visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body.reveal-ready [data-reveal] {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="font-body text-gray-800 bg-nlcga-surface antialiased selection:bg-nlcga-blue selection:text-white">
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+        <div class="page-loader-inner">
+            <img src="assets/nlcga-icon.png" alt="NLCGA logo" class="page-loader-logo">
+            <div class="page-loader-text">Loading</div>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 glass-panel border-b-0 bg-nlcga-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            <a href="nlcga.html" class="font-display font-bold text-2xl tracking-wide text-white flex items-center gap-2">
+                <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-9 h-9 object-contain">
+                NLCGA<span class="text-nlcga-blue">2026</span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                <a href="nlcga.html#about" class="hover:text-nlcga-gold transition-colors">About</a>
+                <a href="nlcga.html#speakers" class="hover:text-nlcga-gold transition-colors">Speakers</a>
+                <a href="sponsorship.html" class="hover:text-nlcga-gold transition-colors">Sponsors</a>
+            </div>
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke-width="1.7"></rect><circle cx="12" cy="12" r="3.5" stroke-width="1.7"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+                </a>
+                <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.94 8.5H3.56V20h3.38V8.5zm.24-3.56A1.96 1.96 0 1 0 3.26 4.9a1.96 1.96 0 0 0 3.92.04zM20.44 13c0-3.42-1.83-5-4.27-5a3.7 3.7 0 0 0-3.33 1.83V8.5H9.46c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.91-1.38 1.34 0 1.88 1.03 1.88 2.54V20h3.38V13z"></path></svg>
+                </a>
+                <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full border border-white/15 text-white/75 hover:text-white hover:border-white/30 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.19a2.96 2.96 0 0 0-2.08-2.09C17.67 4.5 12 4.5 12 4.5s-5.67 0-7.5.6A2.96 2.96 0 0 0 2.42 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .42 4.81 2.96 2.96 0 0 0 2.08 2.09c1.83.6 7.5.6 7.5.6s5.67 0 7.5-.6a2.96 2.96 0 0 0 2.08-2.09A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.42-4.81zM10 15.5v-7l6 3.5-6 3.5z"></path></svg>
+                </a>
+                <a href="nlcga.html" class="bg-white text-nlcga-primary font-display font-semibold px-6 py-2 rounded-full hover:bg-nlcga-gold hover:text-white transition-all duration-300">Back Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 bg-nlcga-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(76,175,80,0.14),transparent_30%)]"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Registration</p>
+            <h1 class="font-display font-bold text-5xl md:text-7xl leading-[0.95] mt-4 max-w-4xl">Register for the 15th NLCGA Conference and Exhibition.</h1>
+            <p class="mt-6 max-w-2xl text-white/78 text-lg leading-8">
+                15th - 16th October 2025 | 9AM - 4PM WAT. International payments are also accepted.
+            </p>
+        </div>
+    </header>
+
+    <main>
+        <section data-reveal="up" class="py-20 bg-white relative overflow-hidden">
+            <div class="max-w-[1500px] mx-auto px-6 lg:px-12 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="font-display font-bold text-4xl md:text-5xl text-black mb-4">Registration Categories</h2>
+                    <p class="text-gray-500 font-body max-w-2xl mx-auto">Choose the category that fits your status and access needs for the 15th NLCGA Conference and Exhibition.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 items-stretch">
+                    <div class="p-8 rounded-3xl text-center border border-gray-200 bg-nlcga-surface hover:border-nlcga-light transition-all">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">Public Pass</p>
+                        <h3 class="text-black font-display text-xl font-bold mb-2">Non Financial Members &amp; Public</h3>
+                        <div class="text-4xl font-display font-bold text-black mb-6">N150k</div>
+                        <ul class="text-gray-600 text-sm font-body space-y-4 mb-8 text-left">
+                            <li>Opening Ceremony</li>
+                            <li>Exhibitions</li>
+                            <li>Plenary Sessions</li>
+                            <li>Delegate Lunch</li>
+                            <li>Coffee Breaks</li>
+                            <li>Networking Cocktail</li>
+                        </ul>
+                        <button class="w-full py-3 rounded-full bg-nlcga-primary text-white font-display font-semibold hover:bg-nlcga-light transition-colors">Purchase Pass</button>
+                    </div>
+
+                    <div class="p-8 rounded-3xl text-center border border-gray-200 bg-nlcga-surface hover:border-nlcga-light transition-all">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">Member Pass</p>
+                        <h3 class="text-black font-display text-xl font-bold mb-2">Financial Members Of NLCGA</h3>
+                        <div class="text-4xl font-display font-bold text-black mb-6">N100k</div>
+                        <ul class="text-gray-600 text-sm font-body space-y-4 mb-8 text-left">
+                            <li>Opening Ceremony</li>
+                            <li>Exhibitions</li>
+                            <li>Plenary Sessions</li>
+                            <li>Delegate Lunch</li>
+                            <li>Coffee Breaks</li>
+                            <li>Networking Cocktail</li>
+                        </ul>
+                        <button class="w-full py-3 rounded-full bg-nlcga-primary text-white font-display font-semibold hover:bg-nlcga-light transition-colors">Purchase Pass</button>
+                    </div>
+
+                    <div class="p-8 rounded-3xl text-center border border-gray-200 bg-nlcga-surface hover:border-nlcga-light transition-all">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">YPS</p>
+                        <h3 class="text-black font-display text-xl font-bold mb-2">Young Professionals / Students</h3>
+                        <div class="text-4xl font-display font-bold text-black mb-6">N20k</div>
+                        <ul class="text-gray-600 text-sm font-body space-y-4 mb-8 text-left">
+                            <li>Opening Ceremony</li>
+                            <li>Exhibitions</li>
+                            <li>Plenary Sessions</li>
+                            <li>Coffee Breaks</li>
+                        </ul>
+                        <button class="w-full py-3 rounded-full bg-nlcga-primary text-white font-display font-semibold hover:bg-nlcga-light transition-colors">Purchase Pass</button>
+                    </div>
+
+                    <div class="p-8 rounded-3xl text-center border border-gray-200 bg-nlcga-surface hover:border-nlcga-light transition-all">
+                        <p class="text-xs uppercase tracking-[0.2em] text-nlcga-blue font-semibold mb-3">Visitor Access</p>
+                        <h3 class="text-black font-display text-xl font-bold mb-2">Visitors</h3>
+                        <div class="text-4xl font-display font-bold text-black mb-6">Free</div>
+                        <ul class="text-gray-600 text-sm font-body space-y-4 mb-8 text-left">
+                            <li>Exhibitions</li>
+                        </ul>
+                        <button class="w-full py-3 rounded-full bg-nlcga-primary text-white font-display font-semibold hover:bg-nlcga-light transition-colors">Get Free Pass</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-reveal="left" class="py-20 bg-nlcga-dark">
+            <div class="max-w-5xl mx-auto px-6 lg:px-12">
+                <div class="rounded-[2rem] border border-white/10 bg-white/5 p-8 md:p-10 backdrop-blur-sm">
+                    <p class="text-nlcga-blue font-display font-bold tracking-widest uppercase text-sm">Need Assistance?</p>
+                    <h2 class="font-display font-bold text-4xl text-white mt-4">Registration and partnership enquiries</h2>
+                    <p class="mt-5 text-gray-300 leading-8">
+                        If you're registering a team, exploring exhibition space, or planning a sponsor package, contact the conference organisers directly for tailored support.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <a href="mailto:events@nlcga.org.ng" class="bg-nlcga-primary text-white font-display font-semibold text-lg px-8 py-4 rounded-full text-center hover:bg-nlcga-light transition-colors">Email Organisers</a>
+                        <a href="nlcga.html#venue" class="border border-white/20 text-white font-display font-semibold text-lg px-8 py-4 rounded-full text-center hover:bg-white/10 transition-colors">View Venue Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer data-reveal="up" class="bg-[#061710] py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-2">
+                <div class="font-display font-bold text-2xl tracking-wide text-white flex items-center gap-2 mb-6">
+                    <img src="assets/nlcga-icon.png" alt="NLCGA icon" class="w-9 h-9 object-contain">
+                    NLCGA<span class="text-nlcga-blue">2026</span>
+                </div>
+                <p class="text-gray-500 font-body text-sm max-w-sm">Driving growth, safety, and innovation in Nigeria's liquefied and compressed gas sectors.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-gray-500 text-sm font-body">
+                    <li><a href="nlcga.html#about" class="hover:text-nlcga-gold transition-colors">About</a></li>
+                    <li><a href="nlcga.html#speakers" class="hover:text-nlcga-gold transition-colors">Speakers</a></li>
+                    <li><a href="sponsorship.html" class="hover:text-nlcga-gold transition-colors">Sponsors</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-4">Contact</h4>
+                <ul class="space-y-2 text-gray-500 text-sm font-body">
+                    <li>events@nlcga.org.ng</li>
+                    <li>+234 (0) 800 NLCGA 26</li>
+                    <li>FCT Abuja, Nigeria</li>
+                </ul>
+                <div class="mt-5 flex items-center gap-3">
+                    <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke-width="1.7"></rect><circle cx="12" cy="12" r="3.5" stroke-width="1.7"></circle><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.94 8.5H3.56V20h3.38V8.5zm.24-3.56A1.96 1.96 0 1 0 3.26 4.9a1.96 1.96 0 0 0 3.92.04zM20.44 13c0-3.42-1.83-5-4.27-5a3.7 3.7 0 0 0-3.33 1.83V8.5H9.46c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.91-1.38 1.34 0 1.88 1.03 1.88 2.54V20h3.38V13z"></path></svg>
+                    </a>
+                    <a href="#" aria-label="YouTube" class="w-9 h-9 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.19a2.96 2.96 0 0 0-2.08-2.09C17.67 4.5 12 4.5 12 4.5s-5.67 0-7.5.6A2.96 2.96 0 0 0 2.42 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .42 4.81 2.96 2.96 0 0 0 2.08 2.09c1.83.6 7.5.6 7.5.6s5.67 0 7.5-.6a2.96 2.96 0 0 0 2.08-2.09A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.42-4.81zM10 15.5v-7l6 3.5-6 3.5z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const revealElements = document.querySelectorAll('[data-reveal]');
+
+        if (revealElements.length) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+                revealElements.forEach((element) => element.classList.add('is-visible'));
+            } else {
+                document.body.classList.add('reveal-ready');
+
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.18,
+                    rootMargin: '0px 0px -10% 0px',
+                });
+
+                revealElements.forEach((element) => revealObserver.observe(element));
+            }
+        }
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('page-loader');
+            if (loader) {
+                loader.classList.add('is-hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
